@@ -1,27 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import ChatScreen from './app/Elderly/Screens/ChatScreen';
-import HomeScreen from './app/Elderly/Screens/HomeScreen';
+// App.js
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import HomeNavigation from './app/Elderly/Navigation/HomeNavigation';
+import { AuthProvider } from './app/auth/context/AuthContext'; // Correct path
+import AppNavigation from './app/Elderly/Navigation/AppNavigation';
 
 export default function App() {
-
   return (
-    <View style={styles.container}>
-      {/* <ChatScreen/> */}
+    <AuthProvider>
       <NavigationContainer>
-          <HomeNavigation/>
+        <AppNavigation />
       </NavigationContainer>
-      {/* <HomeScreen/> */}
-    </View>
+    </AuthProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  
-  },
-});
