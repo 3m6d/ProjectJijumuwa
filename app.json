@@ -16,11 +16,42 @@
       "supportsTablet": true
     },
     "android": {
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.WAKE_LOCK"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.MyApp"
+      "package": "com.anonymous.MyApp",
+      "config": {
+        "usesPermissions": [
+          {
+            "permission": "android.permission.RECORD_AUDIO",
+            "reason": "This app needs to record audio to use the speech-to-text feature."
+          },
+          {
+            "permission": "android.permission.FOREGROUND_SERVICE",
+            "reason": "This app needs to run in the foreground to play audio in the background."
+          },
+          {
+            "permission": "android.permission.READ_EXTERNAL_STORAGE",
+            "reason": "This app needs to read files from storage to play audio."
+          },
+          {
+            "permission": "android.permission.WRITE_EXTERNAL_STORAGE",
+            "reason": "This app needs to write files to storage to save recorded audio"
+          },
+          {
+            "permission": "android.permission.WAKE_LOCK",
+            "reason": "This app needs to keep the device awake to continue playing audio"
+          }
+        ]
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -30,6 +61,9 @@
         "projectId": "747f828a-7370-4f0a-a261-99462e62fa8c"
       }
     },
-    "owner": "user_dipawoli"
+    "owner": "user_dipawoli",
+    "plugins": [
+      "expo-build-properties"
+    ]
   }
 }
