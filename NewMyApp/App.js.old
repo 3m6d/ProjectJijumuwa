@@ -1,0 +1,45 @@
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AuthProvider } from './src/context/AuthContext';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+// Import screens
+import WelcomeScreen from './src/screens/auth/WelcomeScreen';
+import LoginScreen from './src/screens/auth/LoginScreen';
+import RegisterScreen from './src/screens/auth/RegisterScreen';
+import ElderlyInfoScreen from './src/screens/auth/ElderlyInfoScreen';
+import ElderlyDashboard from './src/screens/elderly/ElderlyDashboard';
+import CaretakerDashboard from './src/screens/caretaker/CaretakerDashboard';
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <AuthProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="Welcome"
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              {/* Auth Stack */}
+              <Stack.Screen name="Welcome" component={WelcomeScreen} />
+              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="Register" component={RegisterScreen} />
+              <Stack.Screen name="ElderlyInfo" component={ElderlyInfoScreen} />
+
+              {/* App Stack */}
+              <Stack.Screen name="ElderlyDashboard" component={ElderlyDashboard} />
+              <Stack.Screen name="CaretakerDashboard" component={CaretakerDashboard} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </AuthProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
+  );
+} 
