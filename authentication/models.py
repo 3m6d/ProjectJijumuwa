@@ -39,7 +39,7 @@ class ElderlyProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='elderly_profile')
     date_of_birth = models.DateField(null=True, blank=True)
     medical_conditions = models.TextField(null=True, blank=True)
-    preferred_language = models.CharField(max_length=10, default='en')
+    preferred_language = models.CharField(max_length=10, default='ne')
 
     def __str__(self):
         return f"Profile for {self.user.name}"

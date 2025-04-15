@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import CustomUser, ElderlyProfile, CaretakerProfile
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 
 # Serializer for elderly user details
 class ElderlyUserSerializer(serializers.ModelSerializer):
@@ -91,17 +93,21 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             ElderlyProfile.objects.create(user=user)  # Create elderly profile
             return user
 
-# Serializer for login (optional, for better error messages)
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class LoginTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
-        try:
-            # Validate phone number and password
-            data = super().validate(attrs)
-            data['role'] = self.user.role  # Add role to response
-            data['name'] = self.user.name  # Add name to response
-            return data
-        except Exception:
-            # Provide clear feedback if login fails
-            raise serializers.ValidationError("Invalid phone number or password. Please try again.")
+        # Call the parent class's validate() method, which returns token data.
+        data = super().validate(attrs)
+        # Add role and name from the logged-in user
+        data['role'] = self.user.role
+        data['name'] = self.user.name
+
+        # If the user is a caretaker, include the linked elderly ID
+        if self.user.role == 'caretaker':
+            try:
+                elderly_id = self.user.caretaker_profile.elderly.id
+                data['elderly_id'] = elderly_id
+            except Exception:
+                raise serializers.ValidationError("No linked elderly found for this caretaker.")
+        
+        return data

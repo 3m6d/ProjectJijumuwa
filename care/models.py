@@ -55,6 +55,7 @@ class ConversationLog(models.Model):
     user_input = models.TextField()
     bot_response = models.TextField()
     is_emergency = models.BooleanField(default=False)
+    sentiment = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return f"Log at {self.timestamp} for {self.elderly.name}"
