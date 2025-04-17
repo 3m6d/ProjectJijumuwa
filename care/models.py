@@ -5,9 +5,10 @@ class MedicationReminder(models.Model):
     elderly = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='medication_reminders')
     medication_name = models.CharField(max_length=100)
     dosage = models.CharField(max_length=50)
-    time = models.TimeField()
-    frequency = models.CharField(max_length=50, choices=[('daily', 'Daily'), ('weekly', 'Weekly')])
-    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('taken', 'Taken'), ('missed', 'Missed')], default='pending')
+    frequency = models.CharField(max_length=50)
+    appropriate = models.CharField(max_length=30, choices=[('Before Food', 'Before Food'), ('After Food', 'After Food')])
+    duration = models.CharField(max_length=50)
+    remarks = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return f"{self.medication_name} for {self.elderly.name}"
@@ -48,6 +49,7 @@ class Bhajan(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class ConversationLog(models.Model):
     elderly = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='conversation_logs')
